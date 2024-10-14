@@ -51,11 +51,13 @@ func main() {
 	time.Sleep(time.Second * 3)
 	upload(context.Background(), c, clientID)
 	view(c, clientID)
+
+	download(context.Background(), c, clientID)
 }
 
 func download(ctx context.Context, c pb.FileStorageClient, clientID int64) {
 	request := &pb.DownloadRequest{
-		Name:     "file_0.jpg",
+		Name:     "file_to_upload.jpg",
 		ClientId: clientID,
 	}
 
@@ -82,8 +84,6 @@ func download(ctx context.Context, c pb.FileStorageClient, clientID int64) {
 		if _, err := outFile.Write(chunk.Data); err != nil {
 			log.Fatalf("failed to write chunk to file: %s", err)
 		}
-
-		fmt.Printf("Received chunk number: %d\n", chunk.Chunk)
 	}
 
 	fmt.Println("File downloaded successfully")
