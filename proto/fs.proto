@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option go_package = "github.com/tutorialAI/grpc/proto";
+
+service FileStorage {
+    rpc Upload(stream UploadRequest) returns (UploadResponse);
+    rpc Download(DownloadRequest) returns (stream FileChunk);
+    rpc View(ViewRequest) returns (ViewResponse);
+}
+
+message UploadRequest {
+    bytes data = 1;
+    int64 chunk = 2;
+    string fileName = 3;
+    int64 clientId = 4;
+}
+
+message UploadResponse {
+    string status = 1;
+}
+
+message DownloadRequest {
+    int64 clientId = 1;
+    string name = 2;
+}
+
+message FileChunk {
+    bytes data = 1;
+    int64 chunk = 2;
+}
+
+message ViewRequest {
+    int64 clientId = 1;
+}
+
+message ViewResponse {
+    int64 clientId = 1;
+    string status = 2;
+    repeated FileInfo files = 3;
+}
+
+message FileInfo {
+    string name = 1;
+    string created_at = 2;
+    string updated_at = 3;
+}
