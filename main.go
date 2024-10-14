@@ -8,7 +8,7 @@ func main() {
 		Limits: Limits{
 			download: 10,
 			upload:   10,
-			view:     10,
+			view:     100,
 		},
 	}
 
